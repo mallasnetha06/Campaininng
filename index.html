@@ -1,0 +1,3187 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TargetPulse Studio — Biomedical Outreach & Contact Discovery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Light Theme */
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --bg-input: #f8fafc;
+    --border-color: #e2e8f0;
+    --border-subtle: #edf2f7;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-light: #eef2ff;
+    --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    
+    --success: #10b981;
+    --success-light: #ecfdf5;
+    --success-text: #065f46;
+
+    --warning: #f59e0b;
+    --warning-light: #fffbeb;
+    --warning-text: #92400e;
+
+    --danger: #ef4444;
+    --danger-light: #fef2f2;
+    --danger-text: #991b1b;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-full: 9999px;
+  }
+
+  [data-theme="dark"] {
+    --bg-page: #090d16;
+    --bg-card: #111827;
+    --bg-subtle: #1e293b;
+    --bg-input: #1e293b;
+    --border-color: #1f293d;
+    --border-subtle: #2d3748;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-light: #64748b;
+
+    --primary: #6366f1;
+    --primary-hover: #818cf8;
+    --primary-light: #1e1b4b;
+    
+    --success: #10b981;
+    --success-light: #064e3b;
+    --success-text: #a7f3d0;
+
+    --warning: #f59e0b;
+    --warning-light: #78350f;
+    --warning-text: #fde68a;
+
+    --danger: #ef4444;
+    --danger-light: #7f1d1d;
+    --danger-text: #fecaca;
+
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-page);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 14.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* Header Navigation */
+  header.top-nav {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    backdrop-filter: blur(12px);
+    background-color: rgba(255, 255, 255, 0.92);
+  }
+  [data-theme="dark"] header.top-nav {
+    background-color: rgba(17, 24, 39, 0.92);
+  }
+
+  .nav-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  .brand-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-md);
+    background: var(--primary-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+  }
+  .brand-text h1 {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .version-tag {
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 7px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: var(--radius-full);
+  }
+
+  /* Nav Tabs */
+  .nav-tabs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-subtle);
+    padding: 4px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+  }
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .tab-btn:hover {
+    color: var(--text-main);
+  }
+  .tab-btn.active {
+    background: var(--bg-card);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+  .badge-count {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  /* Header Actions */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .status-pill:hover {
+    border-color: var(--primary);
+  }
+  .pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+  }
+
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-icon:hover {
+    color: var(--text-main);
+    border-color: var(--primary);
+  }
+
+  /* Main Container */
+  main.app-main {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Tab Sections */
+  .tab-pane {
+    display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  .tab-pane.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+
+
+  /* Layout Grids */
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 1024px) {
+    .campaign-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-card);
+  }
+  .card-header h2 {
+    font-family: var(--font-heading);
+    font-size: 15.5px;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-body {
+    padding: 22px;
+  }
+
+  /* Form Controls */
+  .field-group {
+    margin-bottom: 20px;
+  }
+  .field-group:last-child {
+    margin-bottom: 0;
+  }
+  label.field-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+  .field-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 5px;
+    line-height: 1.4;
+  }
+
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--text-main);
+    background: var(--bg-input);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    transition: all 0.15s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    background: var(--bg-card);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  /* Quick Pill Buttons */
+  .pill-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .pill-btn {
+    padding: 5px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .pill-btn:hover {
+    color: var(--text-main);
+    border-color: var(--primary);
+  }
+  .pill-btn.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  /* Data Source Cards */
+  .source-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 640px) {
+    .source-cards { grid-template-columns: 1fr; }
+  }
+  .source-card {
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    cursor: pointer;
+    background: var(--bg-input);
+    transition: all 0.15s ease;
+    position: relative;
+    user-select: none;
+  }
+  .source-card:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+  }
+  .source-card.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+  .source-card-badge {
+    position: absolute;
+    top: -9px;
+    right: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 8px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: #fff;
+  }
+  .source-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--text-main);
+  }
+  .source-card p {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    line-height: 1.35;
+  }
+
+  /* Country Selector Multi-Select */
+  .country-picker-container {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    padding: 8px;
+  }
+  .selected-tags-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    min-height: 34px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .country-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 3px 8px 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-main);
+  }
+  .country-tag button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 0;
+  }
+  .country-tag button:hover {
+    color: var(--danger);
+  }
+  .country-search-wrap {
+    position: relative;
+  }
+  .country-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 220px;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
+    display: none;
+    margin-top: 4px;
+  }
+  .country-dropdown.open {
+    display: block;
+  }
+  .country-option {
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .country-option:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+  .country-option .tier-tag {
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: var(--radius-full);
+    background: var(--bg-subtle);
+    color: var(--text-muted);
+  }
+
+  /* Switches / Quality Toggles */
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .switch-row:last-child {
+    border-bottom: none;
+  }
+  .switch-info {
+    max-width: 80%;
+  }
+  .switch-info h5 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .switch-info p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  
+  /* Modern Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex: none;
+  }
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--border-color);
+    transition: .2s;
+    border-radius: 24px;
+  }
+  .toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .2s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  input:checked + .toggle-slider {
+    background-color: var(--primary);
+  }
+  input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+  }
+
+
+
+  /* Launch Control Card */
+  .launch-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+    flex-wrap: wrap;
+  }
+  .launch-details h4 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .launch-details p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .launch-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Buttons */
+  button.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  button.btn-primary {
+    background: var(--primary-gradient);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  }
+  button.btn-primary:hover:not(:disabled) {
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    transform: translateY(-1px);
+  }
+  button.btn-secondary {
+    background: var(--bg-card);
+    border-color: var(--border-color);
+    color: var(--text-main);
+  }
+  button.btn-secondary:hover:not(:disabled) {
+    background: var(--bg-subtle);
+    border-color: #cbd5e1;
+  }
+  button.btn-danger {
+    background: var(--danger-light);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: var(--danger);
+  }
+  button.btn-danger:hover:not(:disabled) {
+    background: var(--danger);
+    color: #fff;
+  }
+  button.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* Progress & Live Status Box */
+  .live-progress-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+    display: none;
+  }
+  .live-progress-card.active {
+    display: block;
+  }
+
+  /* Stepper */
+  .stepper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    position: relative;
+  }
+  .step-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+    z-index: 2;
+  }
+  .step-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--bg-subtle);
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 700;
+    transition: all 0.2s ease;
+  }
+  .step-node.active .step-icon {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+  }
+  .step-node.completed .step-icon {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+  }
+  .step-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .step-node.active .step-label {
+    color: var(--primary);
+  }
+  .step-node.completed .step-label {
+    color: var(--success);
+  }
+
+  /* Progress Bar */
+  .progress-track {
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--bg-subtle);
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+  }
+  .progress-fill.animated-bar {
+    background-size: 30px 30px;
+    background-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.2) 75%,
+      transparent 75%,
+      transparent
+    );
+    animation: barberpole 1s linear infinite;
+  }
+  @keyframes barberpole {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 0; }
+  }
+
+  /* Metric Cards */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 768px) {
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .metric-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .metric-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .metric-val {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  .status-ticker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    color: var(--text-muted);
+    border-left: 3px solid var(--primary);
+  }
+
+  /* Results Explorer Analytics Bar */
+  .analytics-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 14px 20px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    box-shadow: var(--shadow-sm);
+  }
+  .analytics-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .top-countries-list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .country-stat-chip {
+    padding: 3px 8px;
+    background: var(--bg-subtle);
+    border-radius: var(--radius-full);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+
+  /* Results Explorer Toolbar */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 320px;
+  }
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+  }
+  .search-input-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+  .search-input-wrap input {
+    padding-left: 38px;
+  }
+  .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Data Table */
+  .table-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .table-scroll {
+    overflow-x: auto;
+    max-height: 600px;
+  }
+  table.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    text-align: left;
+  }
+  table.data-table th {
+    background: var(--bg-subtle);
+    padding: 12px 16px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  table.data-table th:hover {
+    color: var(--text-main);
+  }
+  table.data-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    vertical-align: middle;
+    color: var(--text-main);
+  }
+  table.data-table tr:hover td {
+    background: var(--primary-light);
+  }
+  td.cell-email {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .email-copy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .email-copy-badge:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  td.cell-title {
+    max-width: 380px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .country-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    background: var(--bg-subtle);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* Empty State */
+  .empty-state {
+    padding: 60px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .empty-state-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--bg-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+  }
+  .empty-state h3 {
+    font-family: var(--font-heading);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .empty-state p {
+    font-size: 13.5px;
+    color: var(--text-muted);
+    max-width: 420px;
+  }
+
+  /* Table Footer & Pagination */
+  .table-footer {
+    padding: 14px 20px;
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .page-btn {
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 12.5px;
+  }
+  .page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Exports Grid */
+  .exports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 18px;
+  }
+  .export-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+    transition: all 0.15s ease;
+  }
+  .export-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .export-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .export-card-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+    word-break: break-all;
+  }
+  .export-meta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  .export-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 12px;
+  }
+
+  /* Modal System */
+  .modal-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  .modal-backdrop.open {
+    display: flex;
+  }
+  .modal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    max-width: 580px;
+    width: 100%;
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.96) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-header {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .modal-close {
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+  }
+  .modal-body {
+    padding: 22px;
+  }
+  .modal-footer {
+    padding: 14px 22px;
+    background: var(--bg-subtle);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  /* Detail Drawer */
+  .drawer-backdrop {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 90;
+    display: none;
+  }
+  .drawer-backdrop.open { display: block; }
+  .drawer-panel {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: 100%;
+    max-width: 480px;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border-color);
+    box-shadow: var(--shadow-xl);
+    z-index: 95;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+  }
+  .drawer-panel.open {
+    transform: translateX(0);
+  }
+  .drawer-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .drawer-content {
+    padding: 22px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .detail-group label {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+  .detail-group div, .detail-group p {
+    font-size: 14px;
+    color: var(--text-main);
+    line-height: 1.5;
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text-main);
+    color: var(--bg-card);
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    font-size: 13.5px;
+    font-weight: 600;
+    box-shadow: var(--shadow-xl);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 200;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Guide & Templates */
+  .guide-hero {
+    background: var(--primary-gradient);
+    color: #fff;
+    padding: 36px 30px;
+    border-radius: var(--radius-lg);
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-md);
+  }
+  .guide-hero h2 {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .guide-hero p {
+    font-size: 15px;
+    opacity: 0.9;
+    max-width: 650px;
+  }
+  .template-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.6;
+    position: relative;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header Navigation -->
+<header class="top-nav">
+  <div class="nav-container">
+    <div class="brand" onclick="switchTab('new-campaign')">
+      <div class="brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="m4.93 4.93 4.24 4.24"></path>
+          <path d="m14.83 9.17 4.24-4.24"></path>
+          <path d="m14.83 14.83 4.24 4.24"></path>
+          <path d="m9.17 14.83-4.24 4.24"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>TargetPulse <span class="version-tag">Studio v2.0</span></h1>
+        <p>Biomedical & Academic Outreach Discovery</p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tab-nav-new" onclick="switchTab('new-campaign')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+        <span>New Campaign</span>
+      </button>
+      <button class="tab-btn" id="tab-nav-results" onclick="switchTab('results')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <span>Results & Contacts</span>
+        <span class="badge-count" id="nav-contacts-count">0</span>
+      </button>
+      <button class="tab-btn" id="tab-nav-exports" onclick="switchTab('exports')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        <span>Saved Exports</span>
+        <span class="badge-count" id="nav-exports-count">0</span>
+      </button>
+      <button class="tab-btn" id="tab-nav-guide" onclick="switchTab('guide')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>User Guide & Templates</span>
+      </button>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="nav-actions">
+      <div class="status-pill" id="health-status-btn" onclick="openHealthModal()" title="View API Connectivity">
+        <div class="pulse-dot"></div>
+        <span>APIs Connected</span>
+      </div>
+
+      <button class="btn btn-secondary" style="padding: 7px 14px; font-size: 13px;" onclick="openShareModal()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        <span>Share on Wi-Fi</span>
+      </button>
+
+      <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg id="sun-icon" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="app-main">
+
+  <!-- ========================================================================= -->
+  <!-- TAB 1: NEW CAMPAIGN BUILDER -->
+  <!-- ========================================================================= -->
+  <section class="tab-pane active" id="pane-new-campaign">
+    
+
+
+    <!-- Live Progress Dashboard (Visible when extracting) -->
+    <div class="live-progress-card" id="live-progress-card">
+      <div class="stepper">
+        <div class="step-node active" id="step-1">
+          <div class="step-icon">1</div>
+          <span class="step-label">Querying DB</span>
+        </div>
+        <div class="step-node" id="step-2">
+          <div class="step-icon">2</div>
+          <span class="step-label">Scanning Papers</span>
+        </div>
+        <div class="step-node" id="step-3">
+          <div class="step-icon">3</div>
+          <span class="step-label">Extracting Emails</span>
+        </div>
+        <div class="step-node" id="step-4">
+          <div class="step-icon">4</div>
+          <span class="step-label">Campaign Ready</span>
+        </div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill animated-bar" id="progress-bar"></div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <span class="metric-label">Matching Papers in DB</span>
+          <span class="metric-val" id="m-hits">—</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Articles Scanned</span>
+          <span class="metric-val" id="m-scanned">0</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Author Contacts Found</span>
+          <span class="metric-val" id="m-rows" style="color: var(--primary);">0</span>
+        </div>
+        <div class="metric-box">
+          <span class="metric-label">Time Elapsed</span>
+          <span class="metric-val" id="m-time">0s</span>
+        </div>
+      </div>
+
+      <div class="status-ticker" id="status-ticker">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <span id="status-text">Initialising campaign extraction...</span>
+      </div>
+    </div>
+
+
+
+    <!-- Setup Form Grid -->
+    <div class="campaign-grid">
+      
+      <!-- Card 1: Search Topic & Source -->
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            Topic & Data Source
+          </h2>
+          <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="openQueryAssistantModal()">
+            <span>🪄 Query Assistant</span>
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="field-group">
+            <label class="field-label" for="keyword">
+              <span>Research Keywords / Topic</span>
+            </label>
+            <input type="text" id="keyword" placeholder="e.g. crispr AND sickle cell" value="crispr" oninput="updateSummaryBanner()" autofocus>
+            <p class="field-hint">Enter scientific terms, diseases, or drug molecules. Boolean syntax (AND, OR, quotes) works automatically.</p>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Primary Data Source</label>
+            <div class="source-cards">
+              <div class="source-card selected" id="source-epmc" onclick="selectSource('epmc')">
+                <span class="source-card-badge">Fastest</span>
+                <h4>Europe PMC</h4>
+                <p>Scans abstracts + Open-Access full-text JATS XML repository.</p>
+              </div>
+              <div class="source-card" id="source-pubmed" onclick="selectSource('pubmed')">
+                <h4>PubMed</h4>
+                <p>Official NCBI database. Author affiliations & correspondence.</p>
+              </div>
+              <div class="source-card" id="source-mdpi" onclick="selectSource('mdpi')">
+                <h4>MDPI</h4>
+                <p>100% open-access peer-reviewed journal publications.</p>
+              </div>
+            </div>
+            <input type="hidden" id="source" value="epmc">
+          </div>
+
+          <div class="field-group">
+            <label class="field-label">Publication Year Range</label>
+            <div class="grid-2">
+              <div>
+                <input type="number" id="yfrom" value="2023" min="1950" max="2035" oninput="syncYearPills(); updateSummaryBanner()">
+              </div>
+              <div>
+                <input type="number" id="yto" value="2026" min="1950" max="2035" oninput="syncYearPills(); updateSummaryBanner()">
+              </div>
+            </div>
+            <div class="pill-group" id="year-pill-group">
+              <span class="pill-btn" data-years="1" onclick="setYears(1, this)">Last 1 Year</span>
+              <span class="pill-btn active" id="year-pill-3" data-years="3" onclick="setYears(3, this)">Last 3 Years</span>
+              <span class="pill-btn" data-years="5" onclick="setYears(5, this)">Last 5 Years</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="limit">Articles to Scan</label>
+            <input type="number" id="limit" value="1000" min="10" max="50000" step="100" oninput="syncLimitPills(); updateSummaryBanner()">
+            <div class="pill-group" id="limit-pill-group">
+              <span class="pill-btn" data-limit="250" onclick="setLimit(250, this)">250 papers</span>
+              <span class="pill-btn" data-limit="500" onclick="setLimit(500, this)">500 papers</span>
+              <span class="pill-btn active" id="limit-pill-1000" data-limit="1000" onclick="setLimit(1000, this)">1,000 papers</span>
+              <span class="pill-btn" data-limit="2500" onclick="setLimit(2500, this)">2,500 papers</span>
+              <span class="pill-btn" data-limit="5000" onclick="setLimit(5000, this)">5,000 papers</span>
+            </div>
+            <p class="field-hint" id="limit-hint">Scanning 1,000 articles typically yields 150–350 verified corresponding author emails.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Targeting & Quality Filters -->
+      <div class="card">
+        <div class="card-header">
+          <h2>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            Audience & Deliverability
+          </h2>
+        </div>
+        <div class="card-body">
+          
+          <!-- Country Targeter -->
+          <div class="field-group">
+            <label class="field-label">Target Countries & Regions</label>
+            
+            <div class="pill-group" id="region-pill-group" style="margin-bottom: 8px;">
+              <span class="pill-btn active" id="region-all-pill" onclick="selectPresetRegion('all', this)">🌐 All Countries</span>
+              <span class="pill-btn" onclick="selectPresetRegion('na', this)">🇺🇸 North America</span>
+              <span class="pill-btn" onclick="selectPresetRegion('eu', this)">🇪🇺 Western Europe</span>
+              <span class="pill-btn" onclick="selectPresetRegion('apac', this)">🌏 Asia-Pacific</span>
+              <span class="pill-btn" style="color: var(--danger);" onclick="clearCountries()">✕ Clear</span>
+            </div>
+
+            <div class="country-picker-container">
+              <div class="selected-tags-box" id="country-tags-box">
+                <span style="font-size: 12px; color: var(--text-muted);" id="country-empty-tag">All countries allowed (or filtered by High-Income switch below)</span>
+              </div>
+              <div class="country-search-wrap">
+                <input type="text" id="country-search-input" placeholder="Type country name (e.g. United States, Germany, Japan)..." autocomplete="off" onfocus="openCountryDropdown()" oninput="filterCountryDropdown()">
+                <div class="country-dropdown" id="country-dropdown"></div>
+              </div>
+            </div>
+            <p class="field-hint">Leave blank to discover researchers worldwide, or pick specific countries.</p>
+          </div>
+
+          <!-- Quality Toggles -->
+          <div class="field-group" style="margin-top: 18px;">
+            <label class="field-label">Deliverability & Lead Quality Switches</label>
+            
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>⭐ High-Income Countries Only</h5>
+                <p>Focuses on institutions in World Bank FY2025 high-income research hubs.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="high" checked onchange="updateSummaryBanner()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>🛡️ Skip Generic / Office Emails</h5>
+                <p>Removes info@, permissions@, and editor@ to keep genuine scientist inboxes.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="generic" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>📂 Exclude Previously Exported Contacts</h5>
+                <p>Guarantees you never re-contact an author already saved in your past campaigns.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="skip_existing" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>📖 Open-Access Articles Only</h5>
+                <p>Restricts scan to freely accessible papers with complete author notes.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="oa">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>🌐 English-Language Only</h5>
+                <p>Filters out non-English scientific articles.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="english">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-row">
+              <div class="switch-info">
+                <h5>❓ Keep Unknown Country Affiliations</h5>
+                <p>Retains records where the institution's country could not be parsed.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="unknown">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+
+          </div>
+
+          <!-- Advanced Collapsible -->
+          <details style="margin-top: 14px; font-size: 13px;">
+            <summary style="cursor: pointer; color: var(--primary); font-weight: 600;">Advanced Repository Query Syntax (Optional)</summary>
+            <div style="margin-top: 10px;">
+              <input type="text" id="extra" placeholder='e.g. SRC:"MED" OR JOURNAL:"Nature"'>
+              <p class="field-hint">Append custom repository syntax directly to the query string.</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Launch Card -->
+    <div class="launch-card">
+      <div class="launch-details">
+        <h4 id="launch-summary-title">Ready to Launch Campaign</h4>
+        <p id="launch-summary-desc">Click "Start Extraction" to discover and verify corresponding author leads.</p>
+      </div>
+      <div class="launch-actions">
+        <button class="btn btn-secondary" id="stop-btn" onclick="stopExtraction()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+          <span>Stop</span>
+        </button>
+        <button class="btn btn-primary" id="run-btn" onclick="startExtraction()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span>Start Campaign Extraction</span>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 2: RESULTS & CONTACTS EXPLORER -->
+  <!-- ========================================================================= -->
+  <section class="tab-pane" id="pane-results">
+    
+    <!-- Mini Analytics Bar -->
+    <div class="analytics-bar" id="analytics-bar" style="display: none;">
+      <div class="analytics-item">
+        <span style="font-size: 12.5px; color: var(--text-muted);">Verified Leads:</span>
+        <strong id="analytics-total-count" style="font-family: var(--font-mono); font-size: 15px; color: var(--primary);">0</strong>
+      </div>
+      <div class="analytics-item">
+        <span style="font-size: 12.5px; color: var(--text-muted);">Top Countries:</span>
+        <div class="top-countries-list" id="analytics-top-countries"></div>
+      </div>
+      <div class="analytics-item">
+        <span style="font-size: 12.5px; color: var(--text-muted);">Corresponding Rate:</span>
+        <strong id="analytics-corresp-rate" style="font-size: 13.5px; font-weight: 600;">—</strong>
+      </div>
+    </div>
+
+    <!-- Action Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <div class="search-input-wrap">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="filter-search" placeholder="Search contacts by author, email, country, university, title..." oninput="applyTableFilter()">
+        </div>
+        <select id="filter-country" style="width: 180px;" onchange="applyTableFilter()">
+          <option value="">All Countries</option>
+        </select>
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); cursor: pointer; white-space: nowrap;">
+          <input type="checkbox" id="filter-corresp-only" onchange="applyTableFilter()">
+          <span>Corresponding Only</span>
+        </label>
+      </div>
+
+      <div class="toolbar-right">
+        <button class="btn btn-secondary" id="copy-all-btn" onclick="openCopyAllModal()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span>Copy All Clean Emails</span>
+        </button>
+        <button class="btn btn-secondary" id="verify-btn" onclick="verifyJobEmails()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <span>Verify & Deduplicate</span>
+        </button>
+        <button class="btn btn-primary" id="download-btn" onclick="downloadCSV()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download Clean CSV</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <div class="table-scroll">
+        <table class="data-table" id="contacts-table">
+          <thead>
+            <tr>
+              <th onclick="sortTable('author_name')">Author Name ↕</th>
+              <th onclick="sortTable('email')">Email Address ↕</th>
+              <th onclick="sortTable('country')">Country ↕</th>
+              <th onclick="sortTable('title')">Article Title ↕</th>
+              <th onclick="sortTable('pub_year')">Year ↕</th>
+              <th onclick="sortTable('journal')">Journal ↕</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contacts-tbody">
+            <!-- Dynamic rows populated via JS -->
+          </tbody>
+        </table>
+
+        <!-- Empty State Container -->
+        <div class="empty-state" id="empty-state-view">
+          <div class="empty-state-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24"></path><path d="m14.83 9.17 4.24-4.24"></path><path d="m14.83 14.83 4.24 4.24"></path><path d="m9.17 14.83-4.24 4.24"></path></svg>
+          </div>
+          <h3>No Contacts Loaded Yet</h3>
+          <p>Launch an extraction from the New Campaign tab, or load a previously saved campaign from the Saved Exports tab.</p>
+          <button class="btn btn-primary" onclick="switchTab('new-campaign')">Configure New Campaign</button>
+        </div>
+      </div>
+
+      <div class="table-footer">
+        <span id="table-row-count-badge">0 contacts displayed</span>
+        
+        <div class="pagination-controls">
+          <span style="font-size: 12px; margin-right: 6px;">Rows per page:</span>
+          <select id="page-size-select" style="width: 70px; padding: 4px;" onchange="changePageSize()">
+            <option value="25">25</option>
+            <option value="50" selected>50</option>
+            <option value="100">100</option>
+            <option value="999999">All</option>
+          </select>
+          <button class="page-btn" id="prev-page-btn" onclick="prevPage()" disabled>‹ Prev</button>
+          <span id="current-page-label" style="font-weight: 600;">1 / 1</span>
+          <button class="page-btn" id="next-page-btn" onclick="nextPage()" disabled>Next ›</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 3: SAVED EXPORTS & CAMPAIGN HISTORY -->
+  <!-- ========================================================================= -->
+  <section class="tab-pane" id="pane-exports">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+      <div>
+        <h2 style="font-family: var(--font-heading); font-size: 18px; font-weight: 700;">Campaign History & Saved Files</h2>
+        <p style="font-size: 13px; color: var(--text-muted);">Access, re-download, or explore every CSV ever generated by TargetPulse.</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="openFolderInWindows()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          <span>Open Exports Folder on PC</span>
+        </button>
+        <button class="btn btn-secondary" onclick="loadExportsList()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Search Exports Input -->
+    <div style="margin-bottom: 16px; max-width: 380px;">
+      <input type="text" id="search-exports-input" placeholder="Filter saved campaigns by keyword..." oninput="filterExportsList()">
+    </div>
+
+    <div class="exports-grid" id="exports-grid-container">
+      <!-- Populated via JS -->
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 4: NON-IT USER GUIDE & OUTREACH TEMPLATES -->
+  <!-- ========================================================================= -->
+  <section class="tab-pane" id="pane-guide">
+    <div class="guide-hero">
+      <h2>Academic Outreach Studio & Email Playbook</h2>
+      <p>How to discover high-value researcher emails, optimize deliverability, and send campaigns with zero technical complexity.</p>
+    </div>
+
+    <!-- Ready-to-Use Outreach Templates -->
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"></path><path d="M22 2 11 13"></path></svg>
+          Ready-to-Use Cold Email Outreach Templates
+        </h2>
+        <span style="font-size: 12px; color: var(--text-muted);">Copy directly into Gmail or Outlook</span>
+      </div>
+      <div class="card-body">
+        
+        <!-- Template 1 -->
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="font-size: 14.5px; font-weight: 700;">Template 1: Academic Research & Collaboration Outreach</h4>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="copyTemplateText('tpl-1')">Copy Template</button>
+          </div>
+          <div class="template-box" id="tpl-1">Subject: Question regarding your recent work on [Research Topic / Article Title]
+
+Dear Dr. [Author Last Name],
+
+I came across your recent publication titled "[Article Title]" in [Journal Name] and wanted to reach out regarding your findings in [Topic].
+
+Our team has developed a specialized protocol/resource specifically tailored for researchers focusing on [Field], and we thought this might be directly applicable to your lab's ongoing projects.
+
+Would you be open to a brief 5-minute conversation or receiving a 1-page summary of our data?
+
+Best regards,
+[Your Name]
+[Your Organization]</div>
+        </div>
+
+        <!-- Template 2 -->
+        <div style="margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="font-size: 14.5px; font-weight: 700;">Template 2: Product / Reagent Introduction for Lab Heads</h4>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="copyTemplateText('tpl-2')">Copy Template</button>
+          </div>
+          <div class="template-box" id="tpl-2">Subject: Complimentary sample for your research on [Topic]
+
+Dear Dr. [Author Last Name],
+
+Given your recent paper on [Article Title], I wanted to let you know that we are offering complimentary test kits/evaluations to leading research groups working on [Disease / Target].
+
+Researchers using our solution have reported significantly improved yield and reproducibility in comparable workflows.
+
+Could I mail a complimentary sample kit to your department at [Affiliation / University]?
+
+Kind regards,
+[Your Name]
+[Your Company]</div>
+        </div>
+
+        <!-- Template 3 -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="font-size: 14.5px; font-weight: 700;">Template 3: Webinar or Symposium Invitation</h4>
+            <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="copyTemplateText('tpl-3')">Copy Template</button>
+          </div>
+          <div class="template-box" id="tpl-3">Subject: Invitation: Upcoming expert panel on [Topic]
+
+Dear Dr. [Author Last Name],
+
+We are hosting an upcoming virtual roundtable bringing together leaders in [Research Field] to discuss recent breakthroughs and translation challenges.
+
+Knowing your recent contributions to [Topic], we would be delighted to have you attend.
+
+You can view the full agenda and register here: [Link]
+
+Warm regards,
+[Your Name]
+[Your Organization]</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Deliverability Best Practices -->
+    <div class="card" style="margin-bottom: 24px;">
+      <div class="card-header">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          Deliverability & Outreach Best Practices
+        </h2>
+      </div>
+      <div class="card-body" style="font-size: 14px; color: var(--text-muted); line-height: 1.6;">
+        <ul style="padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+          <li><strong>Always Use the BCC Field:</strong> When sending announcements to multiple academic contacts from Outlook or Gmail, paste addresses into the <code>BCC:</code> field to protect recipient privacy.</li>
+          <li><strong>Personalize the Opening Line:</strong> Academic researchers receive dozens of emails daily. Referencing their journal publication or research subject dramatically increases reply rates.</li>
+          <li><strong>Keep Cold Outreach Under 150 Words:</strong> Clearly state who you are, why you are reaching out, and provide a single clear call-to-action.</li>
+          <li><strong>Respect Opt-Outs:</strong> Always include a polite closing: <em>"If you'd rather not hear about future genomics tools, please let me know and I will remove your address."</em></li>
+        </ul>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- ========================================================================= -->
+<!-- MODALS & DRAWERS -->
+<!-- ========================================================================= -->
+
+<!-- Detail Slide-Over Drawer -->
+<div class="drawer-backdrop" id="detail-drawer-backdrop" onclick="closeDrawer()"></div>
+<div class="drawer-panel" id="detail-drawer">
+  <div class="drawer-header">
+    <h3 style="font-family: var(--font-heading); font-size: 16px; font-weight: 700;">Author & Article Profile</h3>
+    <button class="modal-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-content">
+    <div class="detail-group">
+      <label>Author Name</label>
+      <p id="d-author" style="font-weight: 600; font-size: 15px;">—</p>
+    </div>
+    <div class="detail-group">
+      <label>Email Address</label>
+      <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+        <span id="d-email" style="font-family: var(--font-mono); font-weight: 600; color: var(--primary);">—</span>
+        <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="copySingleEmailFromDrawer()">Copy</button>
+      </div>
+    </div>
+    <div class="detail-group">
+      <label>Country & Income Tier</label>
+      <div id="d-country" style="display: flex; align-items: center; gap: 6px;">—</div>
+    </div>
+    <div class="detail-group">
+      <label>Article Title</label>
+      <p id="d-title" style="font-weight: 500;">—</p>
+    </div>
+    <div class="detail-group">
+      <label>Institutional Affiliation</label>
+      <p id="d-affiliation" style="font-size: 13px; color: var(--text-muted); background: var(--bg-subtle); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">—</p>
+    </div>
+    <div class="detail-group">
+      <label>Journal & Year</label>
+      <p id="d-journal">—</p>
+    </div>
+    <div class="detail-group">
+      <label>External Publication Links</label>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;" id="d-links"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Copy All Emails Modal -->
+<div class="modal-backdrop" id="copy-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Copy All Clean Emails</h3>
+      <button class="modal-close" onclick="closeCopyModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">
+        <strong id="copy-modal-count" style="color: var(--primary);">0</strong> unique, verified author email addresses ready to paste.
+      </p>
+      
+      <div style="display: flex; gap: 16px; margin-bottom: 12px;">
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+          <input type="radio" name="email-format" value="comma" checked onchange="updateCopyTextarea()">
+          <span>Comma-separated (For Gmail / Outlook BCC)</span>
+        </label>
+        <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+          <input type="radio" name="email-format" value="newline" onchange="updateCopyTextarea()">
+          <span>One per line (For CRM / Mailchimp)</span>
+        </label>
+      </div>
+
+      <textarea id="copy-textarea" rows="8" readonly style="font-size: 12.5px;"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeCopyModal()">Close</button>
+      <button class="btn btn-primary" onclick="performCopyAll()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        <span>Copy to Clipboard</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Share On Office Wi-Fi Modal -->
+<div class="modal-backdrop" id="share-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Share TargetPulse on Your Office Network</h3>
+      <button class="modal-close" onclick="closeShareModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+        Anyone connected to your office Wi-Fi or local area network can open TargetPulse on their laptop, tablet, or phone without installing Python!
+      </p>
+      
+      <div class="field-group">
+        <label class="field-label">Office Network Web Address</label>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" id="share-lan-url" readonly style="font-family: var(--font-mono); font-weight: 600; color: var(--primary);">
+          <button class="btn btn-primary" style="flex: none;" onclick="copyLanUrl()">Copy Link</button>
+        </div>
+      </div>
+
+      <div class="status-ticker" style="margin-top: 14px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <span>Send this link via Slack, Microsoft Teams, or WhatsApp to allow colleagues to run campaigns directly from their browsers.</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeShareModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- API Health Modal -->
+<div class="modal-backdrop" id="health-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Data Sources & API Status</h3>
+      <button class="modal-close" onclick="closeHealthModal()">✕</button>
+    </div>
+    <div class="modal-body" id="health-modal-body">
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div class="switch-row" style="padding: 10px 0;">
+          <div>
+            <h5 style="display:flex; align-items:center; gap:6px;">
+              <span class="pulse-dot" style="display:inline-block;"></span> Europe PMC REST API
+            </h5>
+            <p id="health-epmc-status" style="font-size:12px; color:var(--text-muted);">Checking...</p>
+          </div>
+          <span class="badge-count" style="background:var(--success-light); color:var(--success-text);">Active</span>
+        </div>
+        <div class="switch-row" style="padding: 10px 0;">
+          <div>
+            <h5 style="display:flex; align-items:center; gap:6px;">
+              <span class="pulse-dot" style="display:inline-block;"></span> PubMed NCBI E-Utilities
+            </h5>
+            <p id="health-pubmed-status" style="font-size:12px; color:var(--text-muted);">Checking...</p>
+          </div>
+          <span class="badge-count" style="background:var(--success-light); color:var(--success-text);">Active</span>
+        </div>
+        <div class="switch-row" style="padding: 10px 0;">
+          <div>
+            <h5 style="display:flex; align-items:center; gap:6px;">
+              <span class="pulse-dot" style="display:inline-block;"></span> MDPI Open Access Bridge
+            </h5>
+            <p id="health-mdpi-status" style="font-size:12px; color:var(--text-muted);">Checking...</p>
+          </div>
+          <span class="badge-count" style="background:var(--success-light); color:var(--success-text);">Active</span>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="checkConnectivityAgain()">Re-check Now</button>
+      <button class="btn btn-primary" onclick="closeHealthModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Query Assistant Modal -->
+<div class="modal-backdrop" id="query-assistant-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Search Query Assistant</h3>
+      <button class="modal-close" onclick="closeQueryAssistantModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px;">
+        Combine research topics without worrying about complex boolean syntax.
+      </p>
+      
+      <div class="field-group">
+        <label class="field-label">Main Topic / Primary Concept</label>
+        <input type="text" id="qa-main" placeholder="e.g. crispr, rna editing, immunotherapy">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Must Also Mention (AND)</label>
+        <input type="text" id="qa-also" placeholder="e.g. oncology, sickle cell, clinical trial">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Exclude Topics (NOT)</label>
+        <input type="text" id="qa-not" placeholder="e.g. mouse, review, veterinary">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeQueryAssistantModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="applyQueryAssistant()">Apply Query</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast-notify">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+  <span id="toast-msg">Copied to clipboard!</span>
+</div>
+
+<script>
+// =========================================================================
+// STATE MANAGEMENT & GLOBAL DATA
+// =========================================================================
+let currentJobId = null;
+let pollTimer = null;
+let currentRows = [];
+let filteredRows = [];
+let allCountriesList = [];
+let selectedCountries = [];
+let pastExportsList = [];
+let activeDrawerRow = null;
+
+// Pagination & Sorting State
+let currentPage = 1;
+let pageSize = 50;
+let sortColumn = null;
+let sortAsc = true;
+
+const $ = id => document.getElementById(id);
+
+// Pre-defined campaign templates
+const TEMPLATES = {
+  crispr: {
+    keyword: 'crispr OR "gene editing" OR "cas9"',
+    source: 'epmc',
+    from: 2023, to: 2025, limit: 1000
+  },
+  cancer: {
+    keyword: '"car-t" OR "checkpoint inhibitor" OR "immunotherapy" AND oncology',
+    source: 'pubmed',
+    from: 2023, to: 2025, limit: 1000
+  },
+  glp1: {
+    keyword: '"glp-1" OR "semaglutide" OR "tirzepatide" OR "metabolic syndrome"',
+    source: 'epmc',
+    from: 2023, to: 2025, limit: 1000
+  },
+  neuro: {
+    keyword: '"alzheimer\'s" OR "amyloid" OR "tau protein" OR neurodegeneration',
+    source: 'pubmed',
+    from: 2023, to: 2025, limit: 1000
+  },
+  cardio: {
+    keyword: '"heart failure" OR "atherosclerosis" OR "cardiac repair"',
+    source: 'pubmed',
+    from: 2023, to: 2025, limit: 1000
+  },
+  ai: {
+    keyword: '("machine learning" OR "deep learning" OR "generative ai") AND ("drug discovery" OR "molecular design")',
+    source: 'epmc',
+    from: 2023, to: 2025, limit: 1000
+  },
+  vaccine: {
+    keyword: '"mrna vaccine" OR "lipid nanoparticle" OR "immunogenicity"',
+    source: 'epmc',
+    from: 2023, to: 2025, limit: 1000
+  },
+  stemcell: {
+    keyword: '"stem cell" OR "pluripotent" OR "regenerative medicine"',
+    source: 'epmc',
+    from: 2023, to: 2025, limit: 1000
+  }
+};
+
+// Preset Country Groups
+const REGION_PRESETS = {
+  na: ["United States", "Canada"],
+  eu: ["United Kingdom", "Germany", "France", "Italy", "Spain", "Netherlands", "Switzerland", "Sweden", "Belgium", "Austria", "Denmark"],
+  apac: ["Japan", "South Korea", "Singapore", "Australia", "New Zealand", "Taiwan", "Hong Kong"]
+};
+
+// Flags Map
+const COUNTRY_FLAGS = {
+  "United States": "🇺🇸", "United Kingdom": "🇬🇧", "Germany": "🇩🇪", "France": "🇫🇷",
+  "Canada": "🇨🇦", "Japan": "🇯🇵", "Australia": "🇦🇺", "Switzerland": "🇨🇭",
+  "Italy": "🇮🇹", "Spain": "🇪🇸", "Netherlands": "🇳🇱", "Sweden": "🇸🇪",
+  "China": "🇨🇳", "India": "🇮🇳", "South Korea": "🇰🇷", "Singapore": "🇸🇬",
+  "Belgium": "🇧🇪", "Denmark": "🇩🇰", "Austria": "🇦🇹", "Norway": "🇳🇴"
+};
+
+// =========================================================================
+// INITIALIZATION
+// =========================================================================
+window.addEventListener('DOMContentLoaded', async () => {
+  initTheme();
+  initDateAndDefaults();
+  updateSummaryBanner();
+  await loadCountries();
+  await loadSystemInfo();
+  await loadExportsList();
+  
+  // Close dropdowns on outside click
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.country-search-wrap') && !e.target.closest('.country-picker-container')) {
+      $('country-dropdown').classList.remove('open');
+    }
+  });
+
+  // Enter key in keyword launches search
+  $('keyword').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') startExtraction();
+  });
+});
+
+// =========================================================================
+// TAB SWITCHING
+// =========================================================================
+function switchTab(tabId) {
+  const panes = {
+    'new-campaign': 'pane-new-campaign',
+    'results': 'pane-results',
+    'exports': 'pane-exports',
+    'guide': 'pane-guide'
+  };
+  const navBtns = {
+    'new-campaign': 'tab-nav-new',
+    'results': 'tab-nav-results',
+    'exports': 'tab-nav-exports',
+    'guide': 'tab-nav-guide'
+  };
+
+  for (const [key, pane] of Object.entries(panes)) {
+    if (key === tabId) {
+      $(pane).classList.add('active');
+      $(navBtns[key]).classList.add('active');
+    } else {
+      $(pane).classList.remove('active');
+      $(navBtns[key]).classList.remove('active');
+    }
+  }
+
+  if (tabId === 'exports') {
+    loadExportsList();
+  }
+}
+
+// =========================================================================
+// THEME HANDLING
+// =========================================================================
+function initTheme() {
+  const saved = localStorage.getItem('tp_theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  updateThemeIcons(saved);
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'light';
+  const target = current === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', target);
+  localStorage.setItem('tp_theme', target);
+  updateThemeIcons(target);
+}
+
+function updateThemeIcons(theme) {
+  if (theme === 'dark') {
+    $('moon-icon').style.display = 'none';
+    $('sun-icon').style.display = 'block';
+  } else {
+    $('moon-icon').style.display = 'block';
+    $('sun-icon').style.display = 'none';
+  }
+}
+
+// =========================================================================
+// COUNTRY TARGETING LOGIC
+// =========================================================================
+async function loadCountries() {
+  try {
+    const res = await fetch('/api/countries');
+    const data = await res.json();
+    allCountriesList = data.countries || [];
+    renderCountryDropdown(allCountriesList);
+  } catch (err) {
+    console.error('Failed to load countries:', err);
+  }
+}
+
+function renderCountryDropdown(list) {
+  const dropdown = $('country-dropdown');
+  dropdown.innerHTML = '';
+  if (!list.length) {
+    dropdown.innerHTML = '<div style="padding:10px; font-size:12px; color:var(--text-muted); text-align:center;">No countries match your search.</div>';
+    return;
+  }
+  for (const c of list.slice(0, 40)) {
+    const flag = COUNTRY_FLAGS[c.name] || '🌐';
+    const div = document.createElement('div');
+    div.className = 'country-option';
+    div.innerHTML = `
+      <span>${flag} ${escapeHtml(c.name)}</span>
+      <span class="tier-tag">${c.high_income ? '⭐ High-Income' : 'Global'}</span>
+    `;
+    div.onclick = () => addCountryTag(c.name);
+    dropdown.appendChild(div);
+  }
+}
+
+function openCountryDropdown() {
+  $('country-dropdown').classList.add('open');
+  filterCountryDropdown();
+}
+
+function filterCountryDropdown() {
+  const query = $('country-search-input').value.trim().toLowerCase();
+  const filtered = allCountriesList.filter(c => 
+    c.name.toLowerCase().includes(query) && !selectedCountries.includes(c.name)
+  );
+  renderCountryDropdown(filtered);
+}
+
+function addCountryTag(countryName) {
+  if (!selectedCountries.includes(countryName)) {
+    selectedCountries.push(countryName);
+    renderCountryTags();
+    updateSummaryBanner();
+  }
+  $('country-search-input').value = '';
+  $('country-dropdown').classList.remove('open');
+}
+
+function removeCountryTag(countryName) {
+  selectedCountries = selectedCountries.filter(c => c !== countryName);
+  renderCountryTags();
+  updateSummaryBanner();
+}
+
+function clearCountries() {
+  selectedCountries = [];
+  const group = $('region-pill-group');
+  if (group) {
+    group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+    if ($('region-all-pill')) $('region-all-pill').classList.add('active');
+  }
+  renderCountryTags();
+  updateSummaryBanner();
+}
+
+function selectPresetRegion(code, btn) {
+  const group = $('region-pill-group');
+  if (group) {
+    group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+  }
+  if (btn && btn.classList) {
+    btn.classList.add('active');
+  } else if (code === 'all' && $('region-all-pill')) {
+    $('region-all-pill').classList.add('active');
+  }
+
+  if (code === 'all') {
+    selectedCountries = [];
+  } else if (REGION_PRESETS[code]) {
+    selectedCountries = [...REGION_PRESETS[code]];
+  }
+  renderCountryTags();
+  updateSummaryBanner();
+}
+
+function renderCountryTags() {
+  const box = $('country-tags-box');
+  box.innerHTML = '';
+  if (!selectedCountries.length) {
+    box.innerHTML = '<span style="font-size: 12px; color: var(--text-muted);">All countries allowed (or filtered by High-Income switch below)</span>';
+    return;
+  }
+  for (const name of selectedCountries) {
+    const flag = COUNTRY_FLAGS[name] || '🌐';
+    const tag = document.createElement('div');
+    tag.className = 'country-tag';
+    tag.innerHTML = `
+      <span>${flag} ${escapeHtml(name)}</span>
+      <button onclick="removeCountryTag('${escapeHtml(name)}')">✕</button>
+    `;
+    box.appendChild(tag);
+  }
+}
+
+// =========================================================================
+// SUMMARY BANNER & CONTROLS SYNC
+// =========================================================================
+function updateSummaryBanner() {
+  // Summary banner removed per request
+}
+
+function initDateAndDefaults() {
+  const currentYear = new Date().getFullYear();
+  const yto = $('yto');
+  const yfrom = $('yfrom');
+  if (yto && yfrom) {
+    yto.value = currentYear;
+    yfrom.value = currentYear - 3;
+    yto.max = currentYear + 2;
+    yfrom.max = currentYear + 2;
+  }
+  syncYearPills();
+  syncLimitPills();
+}
+
+function applyTemplate(key) {
+  const t = TEMPLATES[key];
+  if (!t) return;
+  const currentYear = new Date().getFullYear();
+  $('keyword').value = t.keyword;
+  $('yto').value = currentYear;
+  $('yfrom').value = currentYear - 3;
+  syncYearPills();
+  setLimit(t.limit || 1000);
+  selectSource(t.source);
+
+  updateSummaryBanner();
+  showToast(`Loaded ${key.toUpperCase()} template!`);
+  
+  $('keyword').focus();
+  $('keyword').style.boxShadow = '0 0 0 4px rgba(79, 70, 229, 0.3)';
+  setTimeout(() => $('keyword').style.boxShadow = '', 800);
+}
+
+function selectSource(src) {
+  $('source').value = src;
+  document.querySelectorAll('.source-card').forEach(c => c.classList.remove('selected'));
+  const card = $('source-' + src);
+  if (card) card.classList.add('selected');
+  updateSummaryBanner();
+}
+
+function setYears(spanOrFrom, toOrBtn, maybeBtn) {
+  const currentYear = new Date().getFullYear();
+  let fromYear, toYear, btn;
+
+  if (typeof toOrBtn === 'number') {
+    // Called as setYears(fromYear, toYear, btn)
+    fromYear = spanOrFrom;
+    toYear = toOrBtn;
+    btn = maybeBtn;
+  } else {
+    // Called as setYears(yearsSpan, btn)
+    const span = parseInt(spanOrFrom, 10) || 3;
+    toYear = currentYear;
+    fromYear = currentYear - span;
+    btn = toOrBtn;
+  }
+
+  $('yfrom').value = fromYear;
+  $('yto').value = toYear;
+
+  const group = $('year-pill-group');
+  if (group) {
+    group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  if (btn && btn.classList) {
+    btn.classList.add('active');
+  } else if (group) {
+    const diff = toYear - fromYear;
+    const match = group.querySelector(`[data-years="${diff}"]`);
+    if (match && toYear === currentYear) match.classList.add('active');
+  }
+
+  updateSummaryBanner();
+}
+
+function syncYearPills() {
+  const currentYear = new Date().getFullYear();
+  const yfrom = parseInt($('yfrom').value, 10);
+  const yto = parseInt($('yto').value, 10);
+
+  const group = $('year-pill-group');
+  if (!group) return;
+  group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+
+  if (yto === currentYear) {
+    const diff = currentYear - yfrom;
+    const match = group.querySelector(`[data-years="${diff}"]`);
+    if (match) match.classList.add('active');
+  }
+}
+
+function setLimit(num, btn) {
+  const val = parseInt(num, 10) || 1000;
+  $('limit').value = val;
+
+  const group = $('limit-pill-group');
+  if (group) {
+    group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+  }
+
+  if (btn && btn.classList) {
+    btn.classList.add('active');
+  } else if (group) {
+    const match = group.querySelector(`[data-limit="${val}"]`);
+    if (match) match.classList.add('active');
+  }
+
+  updateLimitHint(val);
+  updateSummaryBanner();
+}
+
+function syncLimitPills() {
+  const val = parseInt($('limit').value, 10);
+  const group = $('limit-pill-group');
+  if (group) {
+    group.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+    const match = group.querySelector(`[data-limit="${val}"]`);
+    if (match) match.classList.add('active');
+  }
+  updateLimitHint(val);
+}
+
+function updateLimitHint(num) {
+  const val = parseInt(num || $('limit').value, 10) || 1000;
+  const minE = Math.round(val * 0.15);
+  const maxE = Math.round(val * 0.35);
+  const hint = $('limit-hint');
+  if (hint) {
+    hint.textContent = `Scanning ${val.toLocaleString()} articles typically yields ${minE.toLocaleString()}–${maxE.toLocaleString()} verified corresponding author emails.`;
+  }
+}
+
+// =========================================================================
+// QUERY ASSISTANT MODAL
+// =========================================================================
+function openQueryAssistantModal() {
+  $('query-assistant-modal').classList.add('open');
+}
+
+function closeQueryAssistantModal() {
+  $('query-assistant-modal').classList.remove('open');
+}
+
+function applyQueryAssistant() {
+  const main = $('qa-main').value.trim();
+  const also = $('qa-also').value.trim();
+  const not = $('qa-not').value.trim();
+
+  let query = main;
+  if (also) query = `(${query}) AND (${also})`;
+  if (not) query = `(${query}) NOT (${not})`;
+
+  if (query) {
+    $('keyword').value = query;
+    updateSummaryBanner();
+    showToast('Applied query to search keywords!');
+  }
+  closeQueryAssistantModal();
+}
+
+// =========================================================================
+// CAMPAIGN EXTRACTION (RUN & POLL)
+// =========================================================================
+function getSettings() {
+  return {
+    keyword: $('keyword').value.trim(),
+    year_from: Number($('yfrom').value),
+    year_to: Number($('yto').value),
+    limit: Number($('limit').value),
+    source: $('source').value,
+    selected_countries: selectedCountries,
+    high_income_only: $('high').checked,
+    drop_generic: $('generic').checked,
+    skip_existing: $('skip_existing').checked,
+    open_access_only: $('oa').checked,
+    english_only: $('english').checked,
+    keep_unknown_country: $('unknown').checked,
+    use_fulltext: true,
+    extra_query: $('extra').value.trim()
+  };
+}
+
+async function startExtraction() {
+  const settings = getSettings();
+  if (!settings.keyword) {
+    showToast('Please enter research keywords or select a template.');
+    $('keyword').focus();
+    return;
+  }
+
+  $('run-btn').disabled = true;
+  $('stop-btn').disabled = false;
+  $('run-btn').innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    <span>Scanning...</span>
+  `;
+
+  $('live-progress-card').classList.add('active');
+  $('progress-bar').style.width = '5%';
+  setStepper(1);
+  $('status-text').textContent = 'Connecting to ' + settings.source.toUpperCase() + ' repository...';
+  $('m-hits').textContent = '—';
+  $('m-scanned').textContent = '0';
+  $('m-rows').textContent = '0';
+  $('m-time').textContent = '0s';
+
+  try {
+    const res = await fetch('/api/start', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(settings)
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      showToast(data.error || 'Failed to start extraction.');
+      resetRunButtons();
+      return;
+    }
+    currentJobId = data.id;
+    pollTimer = setInterval(pollJobStatus, 800);
+  } catch (err) {
+    showToast('Network error starting extraction: ' + err.message);
+    resetRunButtons();
+  }
+}
+
+async function pollJobStatus() {
+  if (!currentJobId) return;
+  try {
+    const res = await fetch('/api/status?id=' + currentJobId);
+    const s = await res.json();
+
+    $('m-hits').textContent = s.hit_count === null ? '—' : Number(s.hit_count).toLocaleString();
+    $('m-scanned').textContent = Number(s.processed).toLocaleString();
+    $('m-rows').textContent = Number(s.rows).toLocaleString();
+    $('m-time').textContent = s.elapsed + 's';
+
+    const targetLimit = Number($('limit').value) || 1000;
+    const pct = Math.min(95, Math.max(5, Math.round((s.processed / targetLimit) * 100)));
+    $('progress-bar').style.width = pct + '%';
+
+    if (s.stage === 'queued') {
+      setStepper(1);
+      $('status-text').textContent = 'Queued in server...';
+      return;
+    }
+    if (s.stage === 'searching' && s.processed === 0) {
+      setStepper(1);
+      $('status-text').textContent = 'Searching ' + s.source.toUpperCase() + ' index for matching records...';
+      return;
+    }
+    if (s.stage === 'searching' || s.stage === 'fetching') {
+      setStepper(2);
+      $('status-text').textContent = `Reading articles (${s.processed} scanned) — discovered ${s.rows} author contacts so far...`;
+      return;
+    }
+    if (s.stage === 'verifying') {
+      setStepper(3);
+      $('status-text').textContent = 'Performing DNS domain validation and deduplication...';
+      return;
+    }
+
+    // Finished or Stopped or Error
+    clearInterval(pollTimer);
+    pollTimer = null;
+    resetRunButtons();
+
+    if (s.stage === 'error') {
+      $('progress-bar').style.width = '100%';
+      $('progress-bar').style.background = 'var(--danger)';
+      $('status-text').textContent = 'Extraction error: ' + s.error;
+      showToast('Error during extraction: ' + s.error);
+      return;
+    }
+
+    setStepper(4);
+    $('progress-bar').style.width = '100%';
+    $('progress-bar').classList.remove('animated-bar');
+    $('status-text').textContent = `Finished! Extracted ${s.rows} contacts from ${s.processed} articles.`;
+    showToast(`Campaign Complete: ${s.rows} contacts ready!`);
+
+    await loadJobResults();
+    await loadExportsList();
+  } catch (err) {
+    console.error('Poll error:', err);
+  }
+}
+
+async function stopExtraction() {
+  if (currentJobId) {
+    await fetch('/api/stop?id=' + currentJobId, { method: 'POST' });
+    $('status-text').textContent = 'Stopping extraction...';
+    $('stop-btn').disabled = true;
+  }
+}
+
+function setStepper(stepNumber) {
+  for (let i = 1; i <= 4; i++) {
+    const el = $('step-' + i);
+    if (i < stepNumber) {
+      el.className = 'step-node completed';
+    } else if (i === stepNumber) {
+      el.className = 'step-node active';
+    } else {
+      el.className = 'step-node';
+    }
+  }
+}
+
+function resetRunButtons() {
+  $('run-btn').disabled = false;
+  $('stop-btn').disabled = true;
+  $('run-btn').innerHTML = `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    <span>Start Campaign Extraction</span>
+  `;
+}
+
+// =========================================================================
+// RESULTS & CONTACTS TABLE (SORTING, FILTERING, PAGINATION)
+// =========================================================================
+async function loadJobResults() {
+  if (!currentJobId) return;
+  try {
+    const res = await fetch('/api/preview?id=' + currentJobId);
+    const data = await res.json();
+    currentRows = data.all_rows || data.rows || [];
+    filteredRows = [...currentRows];
+    
+    updateAnalyticsBar(currentRows);
+    updateCountryFilterDropdown(currentRows);
+    applyTableFilter();
+
+    $('nav-contacts-count').textContent = data.total || currentRows.length;
+    $('download-btn').disabled = currentRows.length === 0;
+    $('verify-btn').disabled = currentRows.length === 0;
+    $('copy-all-btn').disabled = currentRows.length === 0;
+
+    if (currentRows.length > 0) {
+      switchTab('results');
+    }
+  } catch (err) {
+    console.error('Failed to load results:', err);
+  }
+}
+
+function updateAnalyticsBar(rows) {
+  const bar = $('analytics-bar');
+  if (!rows || rows.length === 0) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = 'flex';
+  $('analytics-total-count').textContent = rows.length.toLocaleString();
+
+  // Corresponding author count
+  const corresp = rows.filter(r => r.is_corresponding === 'yes').length;
+  const correspPct = rows.length ? Math.round((corresp / rows.length) * 100) : 0;
+  $('analytics-corresp-rate').textContent = `${correspPct}% (${corresp} leads)`;
+
+  // Top countries
+  const countryCounts = {};
+  rows.forEach(r => {
+    const c = r.country || 'Unknown';
+    countryCounts[c] = (countryCounts[c] || 0) + 1;
+  });
+  const sorted = Object.entries(countryCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+  const container = $('analytics-top-countries');
+  container.innerHTML = '';
+  sorted.forEach(([c, count]) => {
+    const flag = COUNTRY_FLAGS[c] || '🌐';
+    const chip = document.createElement('span');
+    chip.className = 'country-stat-chip';
+    chip.textContent = `${flag} ${c}: ${count}`;
+    container.appendChild(chip);
+  });
+}
+
+function updateCountryFilterDropdown(rows) {
+  const select = $('filter-country');
+  const countries = [...new Set(rows.map(r => r.country).filter(Boolean))].sort();
+  select.innerHTML = '<option value="">All Countries</option>';
+  countries.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    select.appendChild(opt);
+  });
+}
+
+function applyTableFilter() {
+  const query = $('filter-search').value.trim().toLowerCase();
+  const country = $('filter-country').value;
+  const correspOnly = $('filter-corresp-only').checked;
+
+  filteredRows = currentRows.filter(r => {
+    if (country && r.country !== country) return false;
+    if (correspOnly && r.is_corresponding !== 'yes') return false;
+    if (!query) return true;
+
+    const fullStr = `${r.author_name} ${r.email} ${r.country} ${r.title} ${r.journal} ${r.affiliation}`.toLowerCase();
+    return fullStr.includes(query);
+  });
+
+  currentPage = 1;
+  renderPaginatedTable();
+}
+
+function sortTable(column) {
+  if (sortColumn === column) {
+    sortAsc = !sortAsc;
+  } else {
+    sortColumn = column;
+    sortAsc = true;
+  }
+
+  filteredRows.sort((a, b) => {
+    const valA = (a[column] || '').toString().toLowerCase();
+    const valB = (b[column] || '').toString().toLowerCase();
+    if (valA < valB) return sortAsc ? -1 : 1;
+    if (valA > valB) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  renderPaginatedTable();
+}
+
+function renderPaginatedTable() {
+  const tbody = $('contacts-tbody');
+  const emptyView = $('empty-state-view');
+  tbody.innerHTML = '';
+
+  if (!filteredRows || filteredRows.length === 0) {
+    $('contacts-table').style.display = 'none';
+    emptyView.style.display = 'flex';
+    $('table-row-count-badge').textContent = '0 contacts displayed';
+    $('prev-page-btn').disabled = true;
+    $('next-page-btn').disabled = true;
+    $('current-page-label').textContent = '0 / 0';
+    return;
+  }
+
+  $('contacts-table').style.display = 'table';
+  emptyView.style.display = 'none';
+
+  const totalPages = Math.ceil(filteredRows.length / pageSize) || 1;
+  currentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+  const startIdx = (currentPage - 1) * pageSize;
+  const endIdx = Math.min(startIdx + pageSize, filteredRows.length);
+  const rowsToDisplay = filteredRows.slice(startIdx, endIdx);
+
+  $('table-row-count-badge').textContent = `Showing ${startIdx + 1}–${endIdx} of ${filteredRows.length} contacts`;
+  $('current-page-label').textContent = `${currentPage} / ${totalPages}`;
+  $('prev-page-btn').disabled = currentPage <= 1;
+  $('next-page-btn').disabled = currentPage >= totalPages;
+
+  rowsToDisplay.forEach((r, idx) => {
+    const originalIndex = currentRows.indexOf(r);
+    const flag = COUNTRY_FLAGS[r.country] || '🌐';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div style="font-weight:600; color:var(--text-main);">
+          ${escapeHtml(r.author_name || 'Author')}
+          ${r.is_corresponding === 'yes' ? '<span style="font-size:10px; color:var(--primary); font-weight:700; margin-left:4px;">★ CORRESPONDING</span>' : ''}
+        </div>
+      </td>
+      <td class="cell-email">
+        <div class="email-copy-badge" onclick="copyEmail(event, '${escapeHtml(r.email)}')">
+          <span>${escapeHtml(r.email)}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        </div>
+      </td>
+      <td>
+        <span class="country-badge">
+          ${flag} ${escapeHtml(r.country || 'Unknown')}
+        </span>
+      </td>
+      <td class="cell-title" title="${escapeHtml(r.title || '')}">
+        ${escapeHtml(r.title || '—')}
+      </td>
+      <td>${escapeHtml(r.pub_year || '—')}</td>
+      <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+        ${escapeHtml(r.journal || '—')}
+      </td>
+      <td>
+        <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 12px;" onclick="openDrawer(${originalIndex})">
+          Details
+        </button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function prevPage() {
+  if (currentPage > 1) {
+    currentPage--;
+    renderPaginatedTable();
+  }
+}
+
+function nextPage() {
+  const totalPages = Math.ceil(filteredRows.length / pageSize) || 1;
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderPaginatedTable();
+  }
+}
+
+function changePageSize() {
+  pageSize = Number($('page-size-select').value);
+  currentPage = 1;
+  renderPaginatedTable();
+}
+
+// =========================================================================
+// CONTACT DETAIL DRAWER
+// =========================================================================
+function openDrawer(idx) {
+  const row = currentRows[idx];
+  if (!row) return;
+  activeDrawerRow = row;
+
+  $('d-author').textContent = row.author_name || 'Unknown Author';
+  $('d-email').textContent = row.email || '—';
+  const flag = COUNTRY_FLAGS[row.country] || '🌐';
+  $('d-country').innerHTML = `
+    <span class="country-badge" style="font-size:13.5px;">${flag} ${escapeHtml(row.country || 'Unknown')}</span>
+  `;
+  $('d-title').textContent = row.title || 'No Title Available';
+  $('d-affiliation').textContent = row.affiliation || 'No institutional affiliation text provided.';
+  $('d-journal').textContent = `${row.journal || 'Journal'} (${row.pub_year || 'Year'})`;
+
+  const linksBox = $('d-links');
+  linksBox.innerHTML = '';
+  if (row.pmid) {
+    linksBox.innerHTML += `<a href="https://pubmed.ncbi.nlm.nih.gov/${row.pmid}/" target="_blank" class="btn btn-secondary" style="padding:4px 10px; font-size:12px;">PubMed (${row.pmid}) ↗</a>`;
+  }
+  if (row.pmcid) {
+    linksBox.innerHTML += `<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/${row.pmcid}/" target="_blank" class="btn btn-secondary" style="padding:4px 10px; font-size:12px;">PMC Full-Text (${row.pmcid}) ↗</a>`;
+  }
+  if (row.doi) {
+    linksBox.innerHTML += `<a href="https://doi.org/${row.doi}" target="_blank" class="btn btn-secondary" style="padding:4px 10px; font-size:12px;">DOI Link ↗</a>`;
+  }
+
+  $('detail-drawer-backdrop').classList.add('open');
+  $('detail-drawer').classList.add('open');
+}
+
+function closeDrawer() {
+  $('detail-drawer-backdrop').classList.remove('open');
+  $('detail-drawer').classList.remove('open');
+  activeDrawerRow = null;
+}
+
+function copySingleEmailFromDrawer() {
+  if (activeDrawerRow && activeDrawerRow.email) {
+    navigator.clipboard.writeText(activeDrawerRow.email);
+    showToast('Email copied: ' + activeDrawerRow.email);
+  }
+}
+
+function copyEmail(e, email) {
+  e.stopPropagation();
+  navigator.clipboard.writeText(email);
+  showToast('Copied: ' + email);
+}
+
+// =========================================================================
+// COPY ALL EMAILS MODAL
+// =========================================================================
+function openCopyAllModal() {
+  if (!filteredRows.length && !currentRows.length) return;
+  const sourceList = filteredRows.length ? filteredRows : currentRows;
+  const emails = [...new Set(sourceList.map(r => r.email).filter(Boolean))];
+  $('copy-modal-count').textContent = emails.length;
+  updateCopyTextarea();
+  $('copy-modal').classList.add('open');
+}
+
+function closeCopyModal() {
+  $('copy-modal').classList.remove('open');
+}
+
+function updateCopyTextarea() {
+  const sourceList = filteredRows.length ? filteredRows : currentRows;
+  const emails = [...new Set(sourceList.map(r => r.email).filter(Boolean))];
+  const format = document.querySelector('input[name="email-format"]:checked').value;
+  if (format === 'comma') {
+    $('copy-textarea').value = emails.join(', ');
+  } else {
+    $('copy-textarea').value = emails.join('\n');
+  }
+}
+
+function performCopyAll() {
+  const text = $('copy-textarea').value;
+  navigator.clipboard.writeText(text);
+  showToast('Copied all email addresses to clipboard!');
+  closeCopyModal();
+}
+
+// =========================================================================
+// DOMAIN VERIFICATION & CLEANUP
+// =========================================================================
+async function verifyJobEmails() {
+  if (!currentJobId) return;
+  $('verify-btn').disabled = true;
+  $('download-btn').disabled = true;
+  $('verify-btn').innerHTML = `
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    <span>Verifying...</span>
+  `;
+
+  await fetch('/api/verify?id=' + currentJobId, { method: 'POST' });
+  showToast('Verifying domain DNS & deduplicating contacts...');
+  pollTimer = setInterval(pollJobStatus, 800);
+}
+
+// =========================================================================
+// DOWNLOAD CSV
+// =========================================================================
+function downloadCSV() {
+  if (currentJobId) {
+    window.location.href = '/api/csv?id=' + currentJobId;
+  }
+}
+
+// =========================================================================
+// SAVED EXPORTS & HISTORY
+// =========================================================================
+async function loadExportsList() {
+  try {
+    const res = await fetch('/api/exports');
+    const data = await res.json();
+    pastExportsList = data.exports || [];
+    $('nav-exports-count').textContent = pastExportsList.length;
+    renderExportsGrid(pastExportsList);
+  } catch (err) {
+    console.error('Failed to load exports:', err);
+  }
+}
+
+function filterExportsList() {
+  const query = $('search-exports-input').value.trim().toLowerCase();
+  const filtered = pastExportsList.filter(e => 
+    e.name.toLowerCase().includes(query) || (e.keyword && e.keyword.toLowerCase().includes(query))
+  );
+  renderExportsGrid(filtered);
+}
+
+function renderExportsGrid(exports) {
+  const container = $('exports-grid-container');
+  container.innerHTML = '';
+
+  if (!exports.length) {
+    container.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <div class="empty-state-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+        </div>
+        <h3>No Saved Campaigns Found</h3>
+        <p>Run your first extraction from the New Campaign tab to automatically save clean CSV files here.</p>
+      </div>
+    `;
+    return;
+  }
+
+  exports.forEach(exp => {
+    const card = document.createElement('div');
+    card.className = 'export-card';
+    card.innerHTML = `
+      <div class="export-card-header">
+        <div>
+          <div class="export-card-title">${escapeHtml(exp.name)}</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
+            Created on ${escapeHtml(exp.date)}
+          </div>
+        </div>
+        <span class="badge-count" style="text-transform:uppercase;">${escapeHtml(exp.source || 'CSV')}</span>
+      </div>
+      
+      <div class="export-meta">
+        <span><strong>${exp.rows}</strong> contacts</span>
+        <span>•</span>
+        <span>${escapeHtml(exp.formatted_size)}</span>
+      </div>
+
+      <div class="export-actions">
+        <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="previewExportFile('${escapeHtml(exp.name)}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <span>Explore in App</span>
+        </button>
+        <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px;" onclick="downloadExportFile('${escapeHtml(exp.name)}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Download</span>
+        </button>
+        <button class="btn btn-danger" style="padding: 6px 10px; font-size: 12px; margin-left:auto;" onclick="deleteExportFile('${escapeHtml(exp.name)}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        </button>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+async function previewExportFile(name) {
+  try {
+    const res = await fetch('/api/export_preview?file=' + encodeURIComponent(name));
+    const data = await res.json();
+    currentRows = data.all_rows || data.rows || [];
+    filteredRows = [...currentRows];
+
+    updateAnalyticsBar(currentRows);
+    updateCountryFilterDropdown(currentRows);
+    applyTableFilter();
+
+    $('nav-contacts-count').textContent = currentRows.length;
+    $('download-btn').disabled = false;
+    $('copy-all-btn').disabled = false;
+    $('verify-btn').disabled = true;
+
+    showToast(`Loaded "${name}" with ${currentRows.length} contacts!`);
+    switchTab('results');
+  } catch (err) {
+    showToast('Failed to preview export: ' + err.message);
+  }
+}
+
+function downloadExportFile(name) {
+  window.location.href = '/api/export_download?file=' + encodeURIComponent(name);
+}
+
+async function deleteExportFile(name) {
+  if (!confirm(`Are you sure you want to delete "${name}"?`)) return;
+  try {
+    const res = await fetch('/api/export_delete', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ file: name })
+    });
+    if (res.ok) {
+      showToast('File deleted.');
+      loadExportsList();
+    } else {
+      showToast('Failed to delete file.');
+    }
+  } catch (err) {
+    showToast('Delete error: ' + err.message);
+  }
+}
+
+async function openFolderInWindows() {
+  try {
+    const res = await fetch('/api/open_folder', { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      showToast('Opened Exports folder in Windows File Explorer.');
+    } else {
+      showToast(data.message || 'Folder opening not supported.');
+    }
+  } catch (err) {
+    showToast('Error opening folder: ' + err.message);
+  }
+}
+
+// =========================================================================
+// SYSTEM & LAN SHARING INFO
+// =========================================================================
+async function loadSystemInfo() {
+  try {
+    const res = await fetch('/api/system');
+    const sys = await res.json();
+    const lanUrl = `http://${sys.local_ip}:${sys.port}`;
+    $('share-lan-url').value = lanUrl;
+  } catch (err) {
+    console.error('Failed to load system info:', err);
+  }
+}
+
+function openShareModal() {
+  loadSystemInfo();
+  $('share-modal').classList.add('open');
+}
+
+function closeShareModal() {
+  $('share-modal').classList.remove('open');
+}
+
+function copyLanUrl() {
+  const url = $('share-lan-url').value;
+  navigator.clipboard.writeText(url);
+  showToast('Network address copied to clipboard!');
+}
+
+// =========================================================================
+// API HEALTH MODAL
+// =========================================================================
+function openHealthModal() {
+  $('health-modal').classList.add('open');
+  checkConnectivityAgain();
+}
+
+function closeHealthModal() {
+  $('health-modal').classList.remove('open');
+}
+
+async function checkConnectivityAgain() {
+  $('health-epmc-status').textContent = 'Testing connection...';
+  $('health-pubmed-status').textContent = 'Testing connection...';
+  $('health-mdpi-status').textContent = 'Testing connection...';
+
+  try {
+    const res = await fetch('/api/connectivity');
+    const data = await res.json();
+    
+    $('health-epmc-status').textContent = data.epmc.ok ? 'Online: ' + data.epmc.message : 'Error: ' + data.epmc.message;
+    $('health-pubmed-status').textContent = data.pubmed.ok ? 'Online: ' + data.pubmed.message : 'Error: ' + data.pubmed.message;
+    $('health-mdpi-status').textContent = data.mdpi.ok ? 'Online: ' + data.mdpi.message : 'Error: ' + data.mdpi.message;
+  } catch (err) {
+    $('health-epmc-status').textContent = 'Connectivity check failed.';
+  }
+}
+
+// =========================================================================
+// UTILITIES & TEMPLATE COPY
+// =========================================================================
+function copyTemplateText(id) {
+  const el = $(id);
+  if (el) {
+    navigator.clipboard.writeText(el.innerText);
+    showToast('Outreach template copied to clipboard!');
+  }
+}
+
+function showToast(message) {
+  const toast = $('toast-notify');
+  $('toast-msg').textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3200);
+}
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+</script>
+</body>
+</html>

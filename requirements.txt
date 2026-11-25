@@ -1,0 +1,8 @@
+# TargetPulse Studio — Dependencies
+# ---------------------------------------------------------------------------
+# TargetPulse is designed to be 100% self-contained and zero-dependency.
+# It runs entirely on the Python Standard Library (Python 3.8+).
+#
+# No external pip packages (like requests, flask, or pandas) are required.
+# Simply run: python app.py or double-click run.bat
+# ---------------------------------------------------------------------------
